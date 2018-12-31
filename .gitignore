@@ -1,4 +1,12 @@
+#################################
+# Ignore Files in these Folders #
+#################################
 Binaries/
 Intermediate/
 Saved/
 Content/
+
+######################
+# Ignore VC.db Files #
+######################
+*.VC.db
