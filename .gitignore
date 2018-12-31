@@ -10,3 +10,4 @@ Content/
 # Ignore VC.db Files #
 ######################
 *.VC.db
+*.vs
