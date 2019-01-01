@@ -2,6 +2,8 @@
 
 #include "Grabber.h"
 
+#define OUT
+
 // Sets default values for this component's properties
 UGrabber::UGrabber()
 {
@@ -20,14 +22,30 @@ void UGrabber::BeginPlay()
 
 	UE_LOG(LogTemp, Warning, TEXT("Grabber reporting for duty!"));
 	
+	reach = 100.f;
 }
 
 
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
+	FVector pViewPointLocation;
+	FRotator pViewPointRotation;
+
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT pViewPointLocation,
+		OUT pViewPointRotation
+	);
+
+	/*UE_LOG(LogTemp, Warning, TEXT("Location: %s, Postion: %s"), 
+		*pViewPointLocation.ToString(), 
+		*pViewPointRotation.ToString()*/
+	//)
+
+	//Draw a Red Trace in the World to visualize
+	FVector LineTraceEnd = pViewPointLocation + pViewPointRotation.Vector() * reach;
+	DrawDebugLine(GetWorld(), pViewPointLocation, LineTraceEnd, FColor(255, 0, 0, 255), false, 0.f, 0.f, 10.f);
 }
 
