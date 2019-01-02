@@ -46,6 +46,32 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	//Draw a Red Trace in the World to visualize
 	FVector LineTraceEnd = pViewPointLocation + pViewPointRotation.Vector() * reach;
-	DrawDebugLine(GetWorld(), pViewPointLocation, LineTraceEnd, FColor(255, 0, 0, 255), false, 0.f, 0.f, 10.f);
+	DrawDebugLine(GetWorld(), 
+		pViewPointLocation, 
+		LineTraceEnd, 
+		FColor(255, 0, 0, 255), 
+		false, 
+		0.f, 
+		0.f, 
+		10.f);
+
+	//Setup Query Parameters
+	FCollisionQueryParams traceParameters(FName(TEXT("")), false, GetOwner());
+
+	//Line Tracing (AKA Raycast) out to reach distance
+	FHitResult hit;
+	GetWorld()->LineTraceSingleByObjectType(
+		OUT hit,
+		pViewPointLocation,
+		LineTraceEnd,
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		traceParameters
+	);
+
+
+	AActor* hitActor = hit.GetActor();
+	if (hitActor) {
+		UE_LOG(LogTemp, Warning, TEXT("Line Trace Hit: %s"), *(hitActor->GetName()))
+	}
 }
 

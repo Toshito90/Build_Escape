@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Public/DrawDebugHelpers.h"
 #include "Components/ActorComponent.h"
+#include "Public/CollisionQueryParams.h"
 #include "Grabber.generated.h"
 
 
