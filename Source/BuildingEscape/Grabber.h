@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "Public/DrawDebugHelpers.h"
 #include "Components/ActorComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Public/CollisionQueryParams.h"
+#include "Components/InputComponent.h"
 #include "Grabber.generated.h"
 
 
@@ -28,4 +30,14 @@ public:
 
 private:
 	float reach;
+
+	UPhysicsHandleComponent* physicsHandle = nullptr;
+
+	UInputComponent* inputComponent = nullptr;
+
+	//Ray-cast and grab's what is in reach
+	void Grab();
+
+	//Call when Grab is released
+	void Release();
 };
