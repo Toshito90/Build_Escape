@@ -40,4 +40,9 @@ private:
 
 	//Call when Grab is released
 	void Release();
+
+	void FindPhysicsHandleComponent();
+	void SetupInputComponent();
+
+	const FHitResult GetPhysicsBodyInReach();
 };
