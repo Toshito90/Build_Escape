@@ -35,6 +35,11 @@ private:
 
 	UInputComponent* inputComponent = nullptr;
 
+	FVector pViewPointLocation;
+	FRotator pViewPointRotation;
+	FVector LineTraceEnd;
+
+private:
 	//Ray-cast and grab's what is in reach
 	void Grab();
 
@@ -43,6 +48,9 @@ private:
 
 	void FindPhysicsHandleComponent();
 	void SetupInputComponent();
+
+	FVector GetReachLineStart();
+	FVector GetReachLineEnd();
 
 	const FHitResult GetPhysicsBodyInReach();
 };

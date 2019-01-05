@@ -11,3 +11,5 @@ Content/
 ######################
 *.VC.db
 *.vs
+*.VC.opendb
+.sln
