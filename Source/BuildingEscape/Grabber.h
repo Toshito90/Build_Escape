@@ -53,4 +53,5 @@ private:
 	FVector GetReachLineEnd();
 
 	const FHitResult GetPhysicsBodyInReach();
+
 };
