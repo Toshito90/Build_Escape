@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Open_Door.h"
+#include "FDoorEvent.h"
 
 #define OUT
 
 // Sets default values for this component's properties
-UOpen_Door::UOpen_Door()
+UFDoorEvent::UFDoorEvent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -16,7 +16,7 @@ UOpen_Door::UOpen_Door()
 
 
 // Called when the game starts
-void UOpen_Door::BeginPlay()
+void UFDoorEvent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -29,35 +29,19 @@ void UOpen_Door::BeginPlay()
 
 
 // Called every frame
-void UOpen_Door::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UFDoorEvent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (GetTotalMassOfActorsOnPlate() > 25.f) {
-		OpenDoor();
-
-		lastDoorOpenTime = GetWorld()->GetTimeSeconds();
-	}
-
-	if (GetWorld()->GetTimeSeconds() - lastDoorOpenTime > doorCloseDelay) {
-		CloseDoor();
+	if (GetTotalMassOfActorsOnPlate() > triggerMass) {
+		onOpenRequest.Broadcast();
+	} else {
+		onCloseRequest.Broadcast();
 		//lastDoorOpenTime = 1.f;
 	}
 }
 
-
-void UOpen_Door::OpenDoor()
-{
-	owner->SetActorRotation(FRotator(0.f, openAngle, 0.f));
-}
-
-
-void UOpen_Door::CloseDoor()
-{
-	owner->SetActorRotation(FRotator(0.f, 0.f, 0.f));
-}
-
-float UOpen_Door::GetTotalMassOfActorsOnPlate() {
+float UFDoorEvent::GetTotalMassOfActorsOnPlate() {
 	float totalMass = 0.f;
 
 	TArray<AActor*>overlappingActors;
